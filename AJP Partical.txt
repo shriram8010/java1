@@ -1,0 +1,586 @@
+Adavanced JAVA Programming Practical Codes with output
+AJP Lab ( TE E&TC-2019 Course)
+1.Write a program to demonstrate status of key on an Applet window such as KeyPressed, 
+KeyReleased, KeyUp, KeyDown.
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+public class SimpleKey extends Applet implements KeyListener 
+{
+String msg =" ";
+int X = 10, Y = 20; // output coordinates
+public void init()
+{
+addKeyListener(this);
+requestFocus(); // request input focus
+}
+public void keyPressed(KeyEvent ke) 
+{
+showStatus("Key Down");
+int key = ke.getKeyCode(); 
+switch(key)
+{
+case KeyEvent.VK_F1: msg += "<F1>";
+break;
+case KeyEvent.VK_F2: msg += "<F2>";
+break;
+case KeyEvent.VK_F3: msg += "<F3>";
+break;
+case KeyEvent.VK_PAGE_DOWN: msg += "<PgDn>"; 
+break;
+case KeyEvent.VK_PAGE_UP: msg += "<PgUp>"; 
+break;
+case KeyEvent.VK_LEFT: msg += "<Left Arrow>"; 
+break;
+case KeyEvent.VK_RIGHT: msg += "<Right Arrow>";
+break;
+}
+repaint();
+}
+public void keyReleased(KeyEvent ke)
+{
+showStatus("Key Up");
+}
+public void keyTyped(KeyEvent ke) 
+{
+msg += ke.getKeyChar(); 
+repaint();
+}
+public void paint(Graphics g)
+{
+g.drawString(msg, X, Y);
+}
+}
+OUTPUT:
+
+
+
+
+   
+KEY EVENT WITH FRAME:
+import java.awt.*; 
+import java.awt.event.*; 
+public class Demof extends Frame implements KeyListener
+{ 
+Label l; 
+TextArea area; 
+Demof() 
+{ 
+l = new Label(); 
+l.setBounds (20, 50, 100, 20); 
+area = new TextArea(); 
+area.setBounds (20, 80, 300, 300); 
+area.addKeyListener(this); 
+ add(l); 
+ add(area); 
+setSize (400, 400); 
+setLayout (null); 
+setVisible (true); 
+} 
+public void keyPressed (KeyEvent e) 
+{ 
+l.setText ("Key Pressed"); 
+} 
+public void keyReleased (KeyEvent e) 
+{ 
+l.setText ("Key Released"); 
+} 
+public void keyTyped (KeyEvent e) 
+{ 
+l.setText ("Key Typed"); 
+} 
+public static void main(String[] args) 
+{ 
+new Demof(); 
+} 
+}
+OUTPUT :
+
+
+
+
+
+Practical 2(Mouse Event using frame)
+2. Write a program to create a frame using AWT. Implement mouseClicked, 
+mouseEntered() and mouseExited() events. Frame should become visible when the mouse 
+enters it
+import java.awt.*; 
+import java.awt.event.*; 
+public class Demo extends Frame implements MouseListener
+{
+ Label l; 
+Demo()
+{ 
+addMouseListener(this); 
+l=new Label(); 
+l.setBounds(20,50,100,20); 
+ add(l); 
+setSize(300,300); 
+setLayout(null); 
+setVisible(true); 
+ } 
+public void mouseClicked(MouseEvent e) { 
+l.setText("Mouse Clicked"); 
+ } 
+public void mouseEntered(MouseEvent e) { 
+l.setText("Mouse Entered"); 
+ } 
+public void mouseExited(MouseEvent e) { 
+l.setText("Mouse Exited"); 
+ } 
+public void mousePressed(MouseEvent e) { 
+l.setText("Mouse Pressed"); 
+ } 
+public void mouseReleased(MouseEvent e) { 
+l.setText("Mouse Released"); 
+ } 
+public static void main(String[] args) { 
+ new Demo(); 
+} 
+}
+OUTPUT:
+
+Practical 2 Mouse event using applet
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+/* <applet code="MouseEventsDemo" width="700" height="200">
+ </applet>*/
+public class MouseEventsDemo extends Applet implements MouseListener, 
+MouseMotionListener 
+{
+String msg = "";
+int mouseX = 0, mouseY = 0;
+public void init()
+{
+addMouseListener(this); 
+addMouseMotionListener(this);
+}
+public void mouseDragged(MouseEvent me)
+{
+mouseX = me.getX(); 
+mouseY = me.getY(); 
+msg = "*";
+showStatus("Dragging mouse at " + mouseX + ", " + mouseY); 
+repaint();
+}
+public void mouseMoved(MouseEvent me)
+{
+showStatus("Moving mouse at " + me.getX() + ", " + me.getY());
+}
+public void mouseClicked(MouseEvent me)
+{
+mouseX = 0;
+mouseY = 10;
+msg = "Mouse clicked."; 
+repaint();
+}
+public void mouseEntered(MouseEvent me) 
+{
+mouseX = 0;
+mouseY = 10;
+msg = "Mouse entered."; 
+repaint();
+}
+public void mouseExited(MouseEvent me) 
+{
+mouseX = 0;
+mouseY = 10;
+msg = "Mouse exited."; 
+repaint();
+}
+public void mousePressed(MouseEvent me)
+{
+mouseX = me.getX(); 
+mouseY = me.getY(); 
+msg = "Down"; 
+repaint();
+}
+public void mouseReleased(MouseEvent me) 
+{
+mouseX = me.getX(); 
+mouseY = me.getY(); 
+msg = "Up"; 
+repaint();
+}
+public void paint(Graphics g)
+{
+g.drawString(msg, mouseX, mouseY);
+}
+}
+OUTPUT:
+
+
+
+
+3.Write a Java program which accepts students name, id, and marks and display the 
+highest score and the lowest score.
+The student name and id are all strings of no more than 10 characters. The score is an integer 
+between 0 and 100.
+import java.util.Scanner;
+class Student 
+{
+String name;
+String stu_id;
+int score;
+public Student() 
+{
+this(" ", " ", 0);
+}
+public Student(String initName, String initId, int initScore) 
+{
+name = initName;
+stu_id = initId;
+score = initScore;
+}
+}
+public class Demo1
+{
+public static void main(String[] args) 
+{
+Scanner in = new Scanner(System.in);
+System.out.println("Input number of students:");
+int n = Integer.parseInt(in.nextLine().trim());
+System.out.println("Input Student Name, ID, Score:");
+Student stu = new Student();
+Student max = new Student();
+Student min = new Student(" ", " ", 100);
+for (int i = 0; i < n; i ++) 
+{
+stu.name = in.next();
+stu.stu_id = in.next();
+stu.score = in.nextInt();
+if (max.score < stu.score) 
+{
+max.name = stu.name;
+max.stu_id = stu.stu_id;
+max.score = stu.score;
+}
+if (min.score > stu.score) 
+{
+min.name = stu.name;
+min.stu_id = stu.stu_id;
+min.score = stu.score;
+}
+}
+System.out.println("name, ID of the highest score and the lowest score:");
+System.out.println(max.name + " " + max.stu_id);
+System.out.println(min.name + " " + min.stu_id);
+in.close();
+}
+}
+OUTPUT
+
+
+
+
+
+
+4. Write a program to insert and retrieve the data from the database using JDBC.
+// 4a Program to Insert Data into Database
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.SQLException;
+public class InsertStaticOracle
+{ 
+public static void main(String args[])
+{
+ Statement st = null;
+ Connection connection = null; 
+ try{
+ oracle.jdbc.OracleDriver driverObj = new oracle.jdbc.OracleDriver();
+ String url = "jdbc:oracle:thin:@localhost:1521:XE", username = "System" 
+,password = "pass";
+ connection =DriverManager.getConnection(url,username,password);
+ if(connection!=null)
+ System.out.println("Connection established successfully");
+st = connection.createStatement();
+String qry = "Insert into Student values(104 ,'Atharva Agrawal','Dhule')";
+ int count = st.executeUpdate(qry);
+System.out.println(count+" Statement Created Successfully ");
+}
+catch(Exception e)
+ {
+ e.printStackTrace();
+ }
+ finally
+ { 
+try
+ {
+ if(st != null) 
+ st.close();
+ if(connection != null)
+ connection.close();
+ }
+ catch(SQLException e)
+ {
+ e.printStackTrace();
+ }
+ }
+}
+}
+OUTPUT:
+//4b Program to retrieve data:
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+public class SelectOracle
+{
+ public static void main(String args[]) throws SQLException
+{
+ System.out.println("Step 1: ");
+ oracle.jdbc.driver.OracleDriver obj = new oracle.jdbc.driver.OracleDriver();
+// Class.forName(oracle.jdbc.driver.OracleDriver);
+System.out.println("Driver loaded successfully");
+System.out.println("Step 2: ");
+String url="jdbc:oracle:thin:@localhost:1521:XE",uname="SYSTEM" 
+,password="Atharva007";
+Connection connection = DriverManager.getConnection(url,uname,password);
+if(connection!=null)
+ System.out.println("Connection Established Successfully");
+ else
+ System.out.println("Connection Not Established Successfully");
+ System.out.println("Step 3: ");
+ Statement st = connection.createStatement();
+ System.out.println("Statement Referenced ");
+ System.out.println("Step 4: ");
+ System.out.println("Step 5: ");
+String qry = "select * from Student";
+ ResultSet rs = st.executeQuery(qry);
+ System.out.println("rs: "+rs);
+ System.out.println("Step 6: ");
+ System.out.println("Id
+\tName
+\taddress");
+while(rs.next())
+ 
+{
+ int x = rs.getInt(1);
+ String y = rs.getString("Name");
+ String s = rs.getString(3);
+ System.out.println(x+"
+\t"+y+"
+\t"+s);
+ } 
+ System.out.println("Step 7: ");
+rs.close();
+st.close();
+connection.close();
+} 
+}
+OUTPUT:-
+
+
+
+
+6. Write a program to demonstrate the use of InetAddress class and its factory methods.
+import java.net.Inet4Address; 
+import java.util.Arrays; 
+import java.net.InetAddress; 
+public class InetDemo2 
+{ 
+public static void main(String[] arg) throws Exception 
+{ 
+InetAddress ip = Inet4Address.getByName("www.javatpoint.com"); 
+InetAddress ip1[] = InetAddress.getAllByName("www.javatpoint.com"); 
+byte addr[]={72, 3, 2, 12}; 
+System.out.println("ip : "+ip); 
+System.out.print("\n ip1 : "+ip1); 
+InetAddress ip2 = InetAddress.getByAddress(addr); 
+System.out.print("\n ip2 : "+ip2); 
+System.out.print("\n Address : " +Arrays.toString(ip.getAddress())); 
+System.out.print("\n Host Address : " +ip.getHostAddress()); 
+System.out.print("\n isAnyLocalAddress : " +ip.isAnyLocalAddress()); 
+System.out.print("\n isLinkLocalAddress : " +ip.isLinkLocalAddress()); 
+System.out.print("\n isLoopbackAddress : " +ip.isLoopbackAddress()); 
+System.out.print("\n isMCGlobal : " +ip.isMCGlobal()); 
+System.out.print("\n isMCLinkLocal : " +ip.isMCLinkLocal()); 
+System.out.print("\n isMCNodeLocal : " +ip.isMCNodeLocal()); 
+System.out.print("\n isMCOrgLocal : " +ip.isMCOrgLocal()); 
+System.out.print("\n isMCSiteLocal : " +ip.isMCSiteLocal()); 
+System.out.print("\n isMulticastAddress : " +ip.isMulticastAddress()); 
+System.out.print("\n isSiteLocalAddress : " +ip.isSiteLocalAddress()); 
+System.out.print("\n hashCode : " +ip.hashCode()); 
+System.out.print("\n Is ip1 == ip2 : " +ip.equals(ip2)); 
+} 
+}
+OUTPUT:
+
+
+
+
+7. Write a program to create simple Calculator using Applet.
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+/* <applet code="Calculator" width="700" height="200">
+ </applet>*/
+public class Calculator extends Applet implements ActionListener 
+{
+ String msg = "";
+ TextField t1, t2, t3;
+ Button b1, b2, b3, b4;
+ Label l1, l2, l3;
+ public void init() {
+ l1 = new Label("First Number");
+ add(l1);
+ t1 = new TextField(15);
+ add(t1);
+ l2 = new Label("Second Number");
+ add(l2);
+ t2 = new TextField(15);
+ add(t2);
+ l3 = new Label("Result");
+ add(l3);
+ t3 = new TextField(15);
+ add(t3);
+ b1 = new Button("ADD");
+ add(b1);
+ b1.addActionListener(this);
+ b2 = new Button("SUB");
+ add(b2);
+ b2.addActionListener(this);
+ b3 = new Button("MULT");
+ add(b3);
+ b3.addActionListener(this);
+ b4 = new Button("DIV");
+ add(b4);
+ b4.addActionListener(this);
+ }
+ public void actionPerformed(ActionEvent e) 
+ {
+ if (e.getSource() == b1) 
+ {
+ int x = Integer.parseInt(t1.getText());
+ int y = Integer.parseInt(t2.getText());
+ int sum = x + y;
+ t3.setText(" " + sum);
+ }
+ if (e.getSource() == b2) 
+ {
+ int x = Integer.parseInt(t1.getText());
+int y = Integer.parseInt(t2.getText());
+ int sub = x - y;
+ t3.setText(" " + sub);
+ }
+ if (e.getSource() == b3)
+ {
+ int x = Integer.parseInt(t1.getText());
+ int y = Integer.parseInt(t2.getText());
+ int mul = x * y;
+ t3.setText(" " + mul);
+ }
+ if (e.getSource() == b4)
+ {
+ int x = Integer.parseInt(t1.getText());
+ int y = Integer.parseInt(t2.getText());
+ int div = x / y;
+ t3.setText(" " + div);
+ }
+ showStatus(" text & button example");
+ repaint();
+ }
+}
+OUTPUT:
+8. Write a program to create simple Registration Form using Applet.
+import java.awt.*;
+public class Tes extends java.applet.Applet 
+{
+ public void init() 
+ {
+ 
+ setLayout(new FlowLayout(FlowLayout.LEFT));
+ 
+ add(new Label("Name :"));
+ add(new TextField(10));
+ add(new Label("Address :"));
+ add(new TextField(10));
+ 
+ add(new Label("Birthday :"));
+ add(new TextField(10)); 
+ 
+ add(new Label("Gender :"));
+ Choice gender = new Choice(); 
+ gender.addItem("Man"); 
+ gender.addItem("Woman"); 
+ Component add = add(gender); 
+ add(new Label("Job :"));
+ CheckboxGroup job = new CheckboxGroup();
+ add(new Checkbox("Student", job, false));
+ add(new Checkbox("Teacher", job, false));
+ 
+ add(new Button("Register"));
+ add(new Button("Exit"));
+ }
+}
+/*
+<applet code="Tes.class" width=230 height=300></applet>
+*/
+OUTPUT:
+
+
+
+9. Write a simple java program to print a message using Applet.
+import java.awt.*;
+import java.applet.*;
+/* 
+<html>
+<body>
+ <applet code="First_Applet" height="400" width="400">
+ </applet>
+</body>
+</html>
+*/
+public class First_Applet extends Applet
+{
+public void paint(Graphics g)
+{
+g.drawString("Heyy This is my first applet program",20,20);
+}
+}
+OUTPUT:
+
+
+
+10.A.Write a program to create TextField using Applet.
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+/* 
+<applet code= "TextFieldDemo" width=350 height=200>
+</applet>
+*/
+public class TextFieldDemo extends Applet
+{
+TextField tf=new TextField("Hello,How Are You?");
+public void init()
+{
+add(tf);
+}
+}
+OUTPUT:
+10.B.Write a java program to create Checkboxes using Applet.
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+/*
+<applet code="CheckBoxDemo" width=350 height=200>
+</applet>
+*/
+public class CheckBoxDemo extends Applet
+{
+Checkbox cb1=new Checkbox("Adhar Card",true);
+Checkbox cb2=new Checkbox("Pan Card");
+public void init()
+{
+add(cb1);
+add(cb2);
+}
+}
+OUTPUT:
